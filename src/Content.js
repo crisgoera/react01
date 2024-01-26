@@ -6,7 +6,7 @@ const Content = () => {
 const [items, setItems] = useState([
     {
         id: 1,
-        checked: false,
+        checked: true,
         item: "Half kilo unsalted roasted almonds"
     },
     {
@@ -21,6 +21,13 @@ const [items, setItems] = useState([
     }
   ]);
 
+  const handleCheck = (id) => {
+    const listItems = items.map((item)=> item.id === id ? {...item,
+    checked: ! item.checked } : item);
+    setItems(listItems);
+    localStorage.setItem('shoppinglist', JSON.stringify(listItems));
+  }
+
   return (
         <main>
             <ul>
@@ -29,8 +36,12 @@ const [items, setItems] = useState([
                     <input
                         type="checkbox"
                         checked={item.checked}
+                        onChange={() => handleCheck(item.id) }
                     />
-                    <label>{item.item}</label>
+                    <label
+                        style = {(item.checked) ? {textDecoration: 'line-through'} : null}
+                        onDoubleClick = {() => handleCheck(item.id) }
+                    >{item.item}</label>
                     <FaTrashAlt
                         role="button"
                         tabIndex="0"
