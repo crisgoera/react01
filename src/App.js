@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Header from './Header';
 import Footer from './Footer';
 import Content from './Content';
-import { useState } from "react";
+import AddItem from './AddItem';
 
 const App = () => {
   const [items, setItems] = useState([
@@ -22,6 +23,28 @@ const App = () => {
     }
   ]);
 
+  const [newItem, setNewItem] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    addItem(newItem)
+  }
+
+  const addItem = (item) => {
+    const id = items.length ? (items[items.length - 1].id + 1) : 1;
+
+    const myNewItem = {
+        id: id,
+        checked: false,
+        item: item
+    }
+
+    const listItems = [...items, myNewItem]
+    setItems(listItems)
+
+  }
+
   const handleCheck = (id) => {
     const listItems = items.map((item)=> item.id === id ? {...item,
     checked: ! item.checked } : item);
@@ -38,8 +61,13 @@ const App = () => {
   return (
     <div className = 'App'>
       <Header title = "Grocery List"/>
+      <AddItem
+        newItem = {newItem}
+        setNewItem = {setNewItem}
+        handleSubmit = {handleSubmit}
+      />
       <Content
-        items={items}
+        items = {items}
         handleCheck = {handleCheck}
         handleDelete = {handleDelete}
       />
