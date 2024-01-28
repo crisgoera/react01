@@ -12,11 +12,6 @@ const SearchItem = ( {SearchItem, setSearchItem} ) => {
                 value = {SearchItem}
                 onChange = {(e) => setSearchItem(e.target.value)}
             />
-
-            <button
-                type = "submit"
-                aria-label = "Search Item">
-            </button>
         </form>
   )
 }
