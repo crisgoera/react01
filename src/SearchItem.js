@@ -1,5 +1,3 @@
-import { FaSearch } from 'react-icons/fa'
-
 const SearchItem = ( {SearchItem, setSearchItem} ) => {
   return (
     <form className="searchForm" onSubmit={(e) => e.preventDefault()}>
@@ -14,12 +12,6 @@ const SearchItem = ( {SearchItem, setSearchItem} ) => {
                 value = {SearchItem}
                 onChange = {(e) => setSearchItem(e.target.value)}
             />
-
-            <button
-                type = "submit"
-                aria-label = "Search Item">
-                <FaSearch/>
-            </button>
         </form>
   )
 }

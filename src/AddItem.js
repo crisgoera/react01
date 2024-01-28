@@ -1,3 +1,4 @@
+import { FaPlus } from "react-icons/fa";
 import { useRef } from 'react';
 
 const AddItem = ({ newItem, setNewItem, handleSubmit }) => {
@@ -22,6 +23,7 @@ const AddItem = ({ newItem, setNewItem, handleSubmit }) => {
                 aria-label = "Add Item"
                 onClick = {() => inputRef.current.focus()}
                 >
+                <FaPlus/>
             </button>
         </form>
     )
