@@ -5,23 +5,7 @@ import Content from './Content';
 import AddItem from './AddItem';
 
 const App = () => {
-  const [items, setItems] = useState([
-    {
-        id: 1,
-        checked: true,
-        item: "Half kilo unsalted roasted almonds"
-    },
-    {
-        id: 2,
-        checked: false,
-        item: "Grilled Sea Bass"
-    },
-    {
-        id: 3,
-        checked: false,
-        item: "Half dozen free range eggs"
-    }
-  ]);
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('shoppinglist')));
 
   const [newItem, setNewItem] = useState("")
 
@@ -29,6 +13,11 @@ const App = () => {
     e.preventDefault();
     if (!newItem) return;
     addItem(newItem)
+  }
+
+  const setAndSaveItems = (newItems) => {
+    setItems(newItems);
+    localStorage.setItem('shoppinglist', JSON.stringify(newItems));
   }
 
   const addItem = (item) => {
@@ -41,21 +30,19 @@ const App = () => {
     }
 
     const listItems = [...items, myNewItem]
-    setItems(listItems)
+    setAndSaveItems(listItems)
 
   }
 
   const handleCheck = (id) => {
     const listItems = items.map((item)=> item.id === id ? {...item,
     checked: ! item.checked } : item);
-    setItems(listItems);
-    localStorage.setItem('shoppinglist', JSON.stringify(listItems));
+    setAndSaveItems(listItems)
   }
 
   const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id);
-    setItems(listItems);
-    localStorage.setItem('shoppinglist', JSON.stringify(listItems));
+    setAndSaveItems(listItems)
   }
 
   return (
