@@ -4,10 +4,12 @@ import AddItem from './AddItem';
 import SearchItem from './SearchItem';
 import Footer from './Footer';
 import Content from './Content';
+import apiRequest from "./apiRequest";
 
 
 const App = () => {
-    const API_URL = 'http://localhost:3500/items'
+    const API_URL = 'http://localhost:3500/items';
+
     const [items, setItems] = useState([]);
     const [newItem, setNewItem] = useState("");
     const [searchItem, setSearchItem] = useState("");
@@ -39,7 +41,7 @@ const App = () => {
         addItem(newItem);
     }
 
-    const addItem = (item) => {
+    const addItem = async (item) => {
         const id = items.length ? (items[items.length - 1].id + 1) : 1;
 
         const myNewItem = {
@@ -49,17 +51,50 @@ const App = () => {
         }
 
         setItems([...items, myNewItem])
+
+        const postOptions = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(myNewItem)
+        }
+
+        const result = await apiRequest(API_URL, postOptions);
+        if (result) setFetchError(result);
     }
 
-    const handleCheck = (id) => {
+    const handleCheck = async (id) => {
         const listItems = items.map((item)=> item.id === id ? {...item,
         checked: ! item.checked } : item);
         setItems(listItems);
+
+        const myItem = listItems.filter(item => item.id === id);
+        const updateOptions = {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ checked: myItem[0].checked })
+        }
+        const reqURL = `${API_URL}/${id}`;
+        const result = await apiRequest(reqURL, updateOptions);
+        if (result) setFetchError(result);
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const listItems = items.filter((item) => item.id !== id);
         setItems(listItems);
+
+        const deleteOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'appilcation/json'
+            },
+        }
+        const reqURL = `${API_URL}/${id}`;
+        const result = await apiRequest(reqURL, deleteOptions);
+        if (result) setFetchError(result);
     }
 
     return (

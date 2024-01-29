@@ -1,1 +1,19 @@
-{"items" : []}
+{
+  "items": [
+    {
+      "id": "1",
+      "checked": false,
+      "item": "Monkfish"
+    },
+    {
+      "id": "2",
+      "checked": false,
+      "item": "Earl gray tea"
+    },
+    {
+      "id": "3",
+      "checked": false,
+      "item": "BBQ pizza"
+    }
+  ]
+}
